@@ -96,7 +96,10 @@ def check_password() -> bool:
     st.title("📊 Business Analytics Dashboard")
     st.subheader("🔒 Sign in")
 
-    configured_password = st.secrets.get("app_password")
+    try:
+        configured_password = st.secrets.get("app_password")
+    except st.errors.StreamlitSecretNotFoundError:
+        configured_password = None
     if not configured_password:
         st.error(
             "No password is configured for this app. Set `app_password` "
